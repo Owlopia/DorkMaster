@@ -3,10 +3,18 @@ Version=1.0
 Type=Application
 Name=DorkMaster
 GenericName=Google Dorking & OSINT Tool
-Comment=Automated Google Dorking and OSINT Reconnaissance Tool
+Comment=Local GHDB catalogue and authorized search-query helper
 Exec=dorkmaster
 Icon=dorkmaster
 Terminal=true
-Categories=01-info-gathering;03-webapp-analysis;Network;Security;
-Keywords=dork;osint;recon;google;security;pentest;infosec;kali;
+Categories=Security;Network;Utility;01-info-gathering;
+Keywords=dork;osint;recon;google;security;information-gathering;kali;
 StartupNotify=false
+DBusActivatable=false
+X-Kali-Package=dorkmaster
+Actions=Update;
+
+[Desktop Action Update]
+Name=Check for GHDB Updates
+Exec=dorkmaster --update
+Terminal=true

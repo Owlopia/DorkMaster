@@ -2,7 +2,7 @@
 DorkMaster - Automated Google Dorking and OSINT Reconnaissance Tool
 """
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 __company__ = "Owlopia"
 __author__ = "infinitydecoder"
 __license__ = "MIT"

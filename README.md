@@ -26,32 +26,49 @@ DorkMaster is a high-performance reconnaissance intelligence tool designed for a
 ## 🚀 Key Features
 
 ### 📡 Intelligence Gathering
-- **Full Database Synchronization**: Reliable scraping of the entire Exploit-DB (GHDB) repository (7,900+ dorks) via high-performance endpoints.
-- **Incremental Updates**: Fetch newest daily and weekly dork additions without re-downloading the entire catalog.
+- **Full Database Synchronization**: Streams the official Exploit-DB GHDB XML catalogue (7,900+ dorks), rather than relying on an unstable website UI endpoint.
+- **Incremental Updates**: Reconciles records dated since the last successful sync and records sync metadata locally.
 - **XDG Base Directory Compliance**: Safely stores local databases in `~/.local/share/dorkmaster/` and logs in `~/.local/state/dorkmaster/`, fully compliant with Linux multi-user standards.
 
-### 🕵️ Stealth Search Engine & Anti-Detection
-- **Anti-Bot Mitigation**: Randomized jitter delays and intelligent User-Agent rotation.
-- **Proactive 429 Handling**: Automatic detection of rate limiting with IP rotation recommendations (VPN/Proxy).
-- **Dual Execution**: Run queries directly in the terminal or automatically pop results into your default web browser.
+### 🕵️ Search Execution
+- **Terminal Results**: Displays permitted search results in a formatted table.
+- **Clear Provider Handling**: Explains rate limiting, automation blocks, or connection failures and prints a browser-ready URL.
+- **Dual Execution**: Run queries in the terminal or open them in the default web browser.
 
 ### 🐧 Native Kali / Debian Desktop & CLI Integration
 - **Global Terminal Command**: Once installed, run `dorkmaster` from any directory in the system.
 - **Desktop Application Launcher**: Includes Freedesktop `dorkmaster.desktop` standard spec, searchable in Kali Linux under:
   - `01 - Information Gathering`
-  - `03 - Web Application Analysis`
+  - Security / Network application menus on other Linux desktops
 - **Scriptable CLI + Interactive TUI**: Run headless one-liners in shell scripts (`dorkmaster --search "sql"`) or enter the full Cyberpunk TUI menu by typing `dorkmaster`.
 
 ---
 
 ## 📦 Installation & Deployment Options
 
-### Method 1: Install Native Debian / Kali Package (`.deb`)
+### Method 1: Install from a Clone (recommended for Kali, Parrot, Athena, and BlackArch)
+
+This installer creates an isolated per-user environment, installs the terminal
+command, application-menu entry, and DorkMaster icon. It does not modify system
+Python or require `sudo`.
+
+```bash
+git clone https://github.com/Owlopia/DorkMaster.git
+cd DorkMaster
+chmod +x install.sh
+./install.sh
+```
+
+Afterward, open **DorkMaster** from the Security or Information Gathering menu.
+The launcher opens a terminal and starts the interactive interface with the owl
+banner. The terminal command is available at `~/.local/bin/dorkmaster`.
+
+### Method 2: Install Native Debian / Kali Package (`.deb`)
 Download the latest `DorkMaster_v*.deb` package from the [Releases](https://github.com/infinity-decoder/DorkMaster/releases) page:
 ```bash
-sudo dpkg -i DorkMaster_v0.0.3.deb
+sudo dpkg -i DorkMaster_v0.1.0.deb
 # Or install with apt dependency resolution:
-sudo apt install ./DorkMaster_v0.0.3.deb
+sudo apt install ./DorkMaster_v0.1.0.deb
 ```
 > **Tip for Kali Linux / Debian users:** If installing from your user home directory shows an `_apt` permission warning (`pkgAcquire::Run (13: Permission denied)`), install directly with `sudo dpkg -i DorkMaster_v*.deb` or copy the file to `/tmp` before running `sudo apt install /tmp/DorkMaster_v*.deb`.
 
@@ -60,17 +77,17 @@ Now run:
 dorkmaster
 ```
 
-### Method 2: Install on Arch Linux / BlackArch (`.pkg.tar.zst`)
+### Method 3: Install on Arch Linux / BlackArch (`.pkg.tar.zst`)
 Download the latest `DorkMaster_v*.pkg.tar.zst` package from the [Releases](https://github.com/infinity-decoder/DorkMaster/releases) page:
 ```bash
-sudo pacman -U DorkMaster_v0.0.3.pkg.tar.zst
+sudo pacman -U DorkMaster_v0.1.0.pkg.tar.zst
 ```
 Or build locally via PKGBUILD:
 ```bash
 makepkg -si
 ```
 
-### Method 3: Install System-Wide via Pip
+### Method 4: Install System-Wide via Pip
 ```bash
 git clone https://github.com/infinity-decoder/DorkMaster.git
 cd DorkMaster
@@ -81,7 +98,7 @@ Or install in editable mode for development:
 pip install -e .
 ```
 
-### Method 4: Portable Standalone Runner
+### Method 5: Portable Standalone Runner
 ```bash
 chmod +x run.sh
 ./run.sh
@@ -94,8 +111,9 @@ chmod +x run.sh
 DorkMaster provides both an interactive Cyberpunk dashboard and a scriptable CLI:
 
 ```text
-usage: dorkmaster [-h] [-v] [-s KEYWORD] [-q DORK] [-b] [-n COUNT] [--sync]
-                  [--site DOMAIN] [-p PARAM] [--stats] [--banner]
+usage: dorkmaster [-h] [-v] [-s KEYWORD] [-q QUERY] [-b] [-n COUNT] [--sync]
+                  [--update] [--site DOMAIN] [-p FILTER] [--stats]
+                  [--export FILE] [--format {json,csv,txt}] [--banner]
                   [--data-path PATH]
 
 options:
@@ -103,14 +121,18 @@ options:
   -v, --version         Show program version and exit
   -s KEYWORD, --search KEYWORD
                         Search cached Google dorks by keyword or title
-  -q DORK, --query DORK Directly execute a dork query against Google
+  -q QUERY, --query QUERY
+                        Run a query in the browser or retrieve permitted terminal results
   -b, --browser         Open search results directly in default web browser
   -n COUNT, --num COUNT Number of results to retrieve (default: 10)
   --sync                Synchronize full Exploit-DB GHDB library into local storage
+  --update              Check for records added since the last successful sync
   --site DOMAIN         Append target site constraint (e.g. --site example.com)
   -p PARAM, --param PARAM
                         Append custom parameter or keyword filter to query
   --stats               Show statistics, last sync timestamp, and storage locations
+  --export FILE         Export the local catalogue
+  --format              Export format: json, csv, or txt
   --banner              Display the DorkMaster terminal ANSI art banner and exit
   --data-path PATH      Custom path to dorks database JSON file
 ```
@@ -141,6 +163,16 @@ options:
 5. **Sync Full Exploit-DB GHDB Database via Terminal**:
    ```bash
    dorkmaster --sync
+   ```
+
+6. **Check for Updates After an Initial Sync**:
+   ```bash
+   dorkmaster --update
+   ```
+
+7. **Export the Local Catalogue**:
+   ```bash
+   dorkmaster --export dorks.csv --format csv
    ```
 
 ---

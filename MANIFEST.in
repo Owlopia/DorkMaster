@@ -5,6 +5,7 @@ include pyproject.toml
 include setup.py
 include stdeb.cfg
 include dorkmaster.desktop
+include install.sh
 include run.sh
 
 recursive-include assets *.png *.svg

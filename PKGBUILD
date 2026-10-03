@@ -1,6 +1,6 @@
 # Maintainer: Owlopia & infinitydecoder <contact@owlopia.dev>
 pkgname=dorkmaster
-pkgver=0.0.1
+pkgver=0.1.0
 pkgrel=1
 pkgdesc="Automated Google Dorking and OSINT Reconnaissance Tool (Kali Linux, Debian, Arch, BlackArch)"
 arch=('any')
@@ -8,13 +8,8 @@ url="https://github.com/owlopia/dorkmaster"
 license=('MIT')
 depends=(
     'python'
-    'python-requests'
     'python-beautifulsoup4'
-    'python-colorama'
     'python-tabulate'
-    'python-pillow'
-    'python-tqdm'
-    'python-pyfiglet'
 )
 makedepends=('python-setuptools' 'python-build' 'python-wheel')
 

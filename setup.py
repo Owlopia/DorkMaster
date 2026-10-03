@@ -14,7 +14,7 @@ icon_file = "assets/DorkMaster.png" if os.path.exists("assets/DorkMaster.png") e
 
 setup(
     name="dorkmaster",
-    version="0.0.1",
+    version="0.1.0",
     author="infinitydecoder",
     maintainer="Owlopia",
     author_email="contact@owlopia.dev",
@@ -29,12 +29,9 @@ setup(
     include_package_data=True,
     python_requires=">=3.8",
     install_requires=[
-        "requests>=2.28.0",
         "beautifulsoup4>=4.11.0",
-        "colorama>=0.4.5",
         "tabulate>=0.8.10",
-        "pyfiglet>=0.8.post1",
-        "tqdm>=4.64.0",
+        "googlesearch-python>=1.2.3",
     ],
     entry_points={
         'console_scripts': [
