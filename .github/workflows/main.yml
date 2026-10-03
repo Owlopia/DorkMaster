@@ -159,10 +159,10 @@ jobs:
 
           # Wrapper script directing to dorkmaster.cli module
           cat << 'EOF' > "$PKG_BUILD/usr/bin/dorkmaster"
-#!/usr/bin/env bash
-export PYTHONPATH="/usr/lib/python3/dist-packages:${PYTHONPATH}"
-exec python3 -m dorkmaster.cli "$@"
-EOF
+          #!/usr/bin/env bash
+          export PYTHONPATH="/usr/lib/python3/dist-packages:${PYTHONPATH}"
+          exec python3 -m dorkmaster.cli "$@"
+          EOF
           chmod 755 "$PKG_BUILD/usr/bin/dorkmaster"
 
           if [ -f "dorkmaster.desktop" ]; then
@@ -212,10 +212,10 @@ EOF
 
           # Wrapper script directing to dorkmaster.cli module
           cat << 'EOF' > "$ARCH_BUILD/usr/bin/dorkmaster"
-#!/usr/bin/env bash
-export PYTHONPATH="/usr/lib/python3/dist-packages:${PYTHONPATH}"
-exec python3 -m dorkmaster.cli "$@"
-EOF
+          #!/usr/bin/env bash
+          export PYTHONPATH="/usr/lib/python3/dist-packages:${PYTHONPATH}"
+          exec python3 -m dorkmaster.cli "$@"
+          EOF
           chmod 755 "$ARCH_BUILD/usr/bin/dorkmaster"
 
           if [ -f "dorkmaster.desktop" ]; then
