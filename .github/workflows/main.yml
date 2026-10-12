@@ -143,7 +143,7 @@ jobs:
           rm -rf "$PKG_BUILD"
           mkdir -p "$PKG_BUILD/DEBIAN"
           mkdir -p "$PKG_BUILD/usr/bin"
-          mkdir -p "$PKG_BUILD/usr/lib/python3/dist-packages/dorkmaster"
+          mkdir -p "$PKG_BUILD/usr/lib/python3/site-packages/dorkmaster"
           mkdir -p "$PKG_BUILD/usr/share/applications"
           mkdir -p "$PKG_BUILD/usr/share/icons/hicolor/128x128/apps"
           mkdir -p "$PKG_BUILD/usr/share/doc/dorkmaster"
@@ -168,11 +168,11 @@ jobs:
           if [ -f "dorkmaster.desktop" ]; then
             cp dorkmaster.desktop "$PKG_BUILD/usr/share/applications/"
           fi
-          if [ -f "assets/DorkMaster.png" ]; then
-            cp assets/DorkMaster.png "$PKG_BUILD/usr/share/icons/hicolor/128x128/apps/dorkmaster.png"
-            cp assets/DorkMaster.png "$PKG_BUILD/usr/share/icons/hicolor/128x128/apps/DorkMaster.png"
-          elif [ -f "assets/dorkmaster.png" ]; then
-            cp assets/dorkmaster.png "$PKG_BUILD/usr/share/icons/hicolor/128x128/apps/dorkmaster.png"
+          if [ -f "dorkmaster/assets/dorkmaster.png" ]; then
+            cp dorkmaster/assets/dorkmaster.png "$PKG_BUILD/usr/share/icons/hicolor/128x128/apps/dorkmaster.png"
+            cp dorkmaster/assets/dorkmaster.png "$PKG_BUILD/usr/share/icons/hicolor/128x128/apps/DorkMaster.png"
+          elif [ -f "dorkmaster.svg" ]; then
+            cp dorkmaster.svg "$PKG_BUILD/usr/share/icons/hicolor/128x128/apps/dorkmaster.svg"
           fi
           if [ -f "LICENSE" ]; then
             cp LICENSE "$PKG_BUILD/usr/share/doc/dorkmaster/copyright"
@@ -196,7 +196,7 @@ jobs:
           ARCH_BUILD="build_arch/pkg"
           rm -rf "$ARCH_BUILD"
           mkdir -p "$ARCH_BUILD/usr/bin"
-          mkdir -p "$ARCH_BUILD/usr/lib/python3/dist-packages/dorkmaster"
+          mkdir -p "$ARCH_BUILD/usr/lib/python3/site-packages/dorkmaster"
           mkdir -p "$ARCH_BUILD/usr/share/applications"
           mkdir -p "$ARCH_BUILD/usr/share/icons/hicolor/128x128/apps"
           mkdir -p "$ARCH_BUILD/usr/share/licenses/dorkmaster"
@@ -221,11 +221,11 @@ jobs:
           if [ -f "dorkmaster.desktop" ]; then
             cp dorkmaster.desktop "$ARCH_BUILD/usr/share/applications/"
           fi
-          if [ -f "assets/DorkMaster.png" ]; then
-            cp assets/DorkMaster.png "$ARCH_BUILD/usr/share/icons/hicolor/128x128/apps/dorkmaster.png"
-            cp assets/DorkMaster.png "$ARCH_BUILD/usr/share/icons/hicolor/128x128/apps/DorkMaster.png"
-          elif [ -f "assets/dorkmaster.png" ]; then
-            cp assets/dorkmaster.png "$ARCH_BUILD/usr/share/icons/hicolor/128x128/apps/dorkmaster.png"
+          if [ -f "dorkmaster/assets/dorkmaster.png" ]; then
+            cp dorkmaster/assets/dorkmaster.png "$ARCH_BUILD/usr/share/icons/hicolor/128x128/apps/dorkmaster.png"
+            cp dorkmaster/assets/dorkmaster.png "$ARCH_BUILD/usr/share/icons/hicolor/128x128/apps/DorkMaster.png"
+          elif [ -f "dorkmaster.svg" ]; then
+            cp dorkmaster.svg "$ARCH_BUILD/usr/share/icons/hicolor/128x128/apps/dorkmaster.svg"
           fi
           if [ -f "LICENSE" ]; then
             cp LICENSE "$ARCH_BUILD/usr/share/licenses/dorkmaster/LICENSE"
@@ -267,7 +267,10 @@ jobs:
           rm -rf build_tar
           mkdir -p "$TAR_DIR"
           cp -r dorkmaster "$TAR_DIR/"
-          cp -r assets "$TAR_DIR/" 2>/dev/null || true
+          cp -r dorkmaster/assets "$TAR_DIR/" 2>/dev/null || true
+          if [ -f "dorkmaster.svg" ]; then
+            cp dorkmaster.svg "$TAR_DIR/"
+          fi
           mkdir -p "$TAR_DIR/data"
           if [ -f "data/dorks.json" ]; then
             cp data/dorks.json "$TAR_DIR/data/"
@@ -275,7 +278,7 @@ jobs:
             cp dorkmaster/data/dorks.json "$TAR_DIR/data/"
           fi
           cp dorkmaster.desktop "$TAR_DIR/" 2>/dev/null || true
-          cp dorkmaster_pro.py "$TAR_DIR/" 2>/dev/null || true
+          # dorkmaster_pro.py removed - using single dorkmaster entrypoint
           cp requirements.txt "$TAR_DIR/" 2>/dev/null || true
           cp run.sh "$TAR_DIR/" 2>/dev/null || true
           cp setup.py "$TAR_DIR/" 2>/dev/null || true

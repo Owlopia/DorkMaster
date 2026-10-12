@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DorkMaster Pro - Entrypoint for legacy / direct script execution.
+DorkMaster - Entrypoint for direct script execution.
 Redirects to the modular dorkmaster package.
 """
 import sys

@@ -15,13 +15,14 @@ makedepends=('python-setuptools' 'python-build' 'python-wheel')
 
 package() {
     mkdir -p "${pkgdir}/usr/bin"
-    mkdir -p "${pkgdir}/usr/lib/python3/dist-packages/dorkmaster"
+    mkdir -p "${pkgdir}/usr/lib/python3/site-packages/dorkmaster"
     mkdir -p "${pkgdir}/usr/share/dorkmaster"
     mkdir -p "${pkgdir}/usr/share/applications"
     mkdir -p "${pkgdir}/usr/share/icons/hicolor/128x128/apps"
+    mkdir -p "${pkgdir}/usr/share/icons/hicolor/scalable/apps"
     mkdir -p "${pkgdir}/usr/share/licenses/dorkmaster"
 
-    cp -r "${srcdir}/dorkmaster/"* "${pkgdir}/usr/lib/python3/dist-packages/dorkmaster/" 2>/dev/null || cp -r dorkmaster/* "${pkgdir}/usr/lib/python3/dist-packages/dorkmaster/"
+    cp -r "${srcdir}/dorkmaster/"* "${pkgdir}/usr/lib/python3/site-packages/dorkmaster/" 2>/dev/null || cp -r dorkmaster/* "${pkgdir}/usr/lib/python3/site-packages/dorkmaster/"
 
     if [ -f "data/dorks.json" ]; then
         cp data/dorks.json "${pkgdir}/usr/share/dorkmaster/dorks.json"
@@ -40,6 +41,9 @@ package() {
         cp assets/DorkMaster.png "${pkgdir}/usr/share/icons/hicolor/128x128/apps/DorkMaster.png"
     elif [ -f "assets/dorkmaster.png" ]; then
         cp assets/dorkmaster.png "${pkgdir}/usr/share/icons/hicolor/128x128/apps/dorkmaster.png"
+    fi
+    if [ -f "dorkmaster.svg" ]; then
+        cp dorkmaster.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/dorkmaster.svg"
     fi
     if [ -f "LICENSE" ]; then
         cp LICENSE "${pkgdir}/usr/share/licenses/dorkmaster/LICENSE"

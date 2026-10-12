@@ -24,7 +24,7 @@ setup(
     url="https://github.com/Owlopia/DorkMaster",
     packages=find_packages(),
     package_data={
-        "dorkmaster": ["assets/*.png", "data/*.json"],
+        "dorkmaster": ["assets/*.png", "assets/*.svg", "data/*.json"],
     },
     include_package_data=True,
     python_requires=">=3.8",
